@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Examen Miguel Angel </title>
+</head>
+<body>
+    <h1>Lista de reproducción</h1>
+	
+<?php 
+
+	if(isset($_SESSION['error'])){
+		echo '<script >alert("'.$_SESSION['error'].'")</script>';
+		unset($_SESSION['error']);
+	}
+	//var_dump($_SESSION['u']);
+
+	if(!$_SESSION['u']){
+		?>
+	<h3>Bienvenido inicia sesion o registrate si aun no eres mienbro</h3>
+	<div class="login">
+	<form action="index.php?user" method="post">
+		<input type="text" name="Nombre" placeholder="nombre de usuario">
+		<input type="password" name="pass" placeholder="Contraseña">
+		<input type="submit" value="Entrar">
+	</form>
+	<a href="index.php?user&register">Registrarme</a>
+	</div>
+	<?php 
+	}
+	else {
+		echo "Bienvenido: '".$_SESSION['u']->nombre."'";
+		echo "</br><a href='index.php?user&logout'>Salir</a></br>";
+		//formulario para añadir listas de reproduccion
+		echo "<h2>Crea tu lista de reproduccion!</h2> </br>";
+		echo "<form action='index.php?Post' method='post' enctype='multipart/form-data'>";
+		echo "<input type='text' name='titulo' placeholder='Titulo' required> ";
+		echo "</br><input type='submit' name='CrearLista' value='CrearLista'>";
+		echo "</form>";
+		echo "</br>";
+
+
+		echo "</br><a href='index.php?user&buscador'>Buscador</a></br>";
+
+		
+		//Mostramos las listas de reproduccion que tiene cada usuario si tiene y sino monstramos un mensaje//
+		if (empty($lista)) {
+			echo "</br>Añade una lista de reproducción";
+		}else{
+
+			echo "<h4>Tus listas de reproduccion</h4>";
+			foreach ($lista as $listas) {
+				echo "</br>";
+				echo "</br>Titulo: ".$listas->nombre."<br/>";
+				//añade una cancion a la lista de reproduccion
+				echo "<h5>Añade una Cancion</h5> </br>";
+				echo "<form action='index.php?nuevaCancion' method='post' enctype='multipart/form-data'>";
+				echo "</br><input type='text' name='titulo' placeholder='Titulo' class='Texto1' required>";
+				echo "</br><input type='text' name='autor' placeholder='Autor' class='autor' required> ";
+				echo "</br><input type='text' name='duracion' placeholder='Duracion' class='duracion' required> ";
+				echo "</br><input type='hidden' name='listaid' value='".$listas->id."'> ";
+				echo "</br> <input type='submit' name='SendCancion' value='AñadirCancion'>";
+				echo "</form>";
+			}
+
+		}
+
+
+		if (empty($canciones)) {
+			echo "</br>No se han cargado las canciones";
+		}else{
+
+			echo "<h4>Todas las canciones</h4>";
+			foreach ($canciones as $cancion) {
+				echo "</br>Titulo: ".$cancion->titulo."<br/>";
+				echo "<form action='index.php?AñadirALista' method='post' enctype='multipart/form-data'>";
+				/*foreach(($lista as $listas){
+					echo "</br> <input type='submit' name='DeepComentario' value='".$listas->nombre."'>"
+				}*/
+				echo "</form>";
+			}
+
+		}
+
+
+
+
+
+
+		
+	}
+	?>
+
+</body>
+</html>
+	

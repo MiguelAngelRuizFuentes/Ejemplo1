@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Buscador</title>
+</head>
+<body>
+<h3>Busca por el titulo o por el texto</h3>
+
+<form action="index.php?buscadorpalabra" method="post">
+</br><input type='text' name='buscadort' placeholder='Encuentra el articuo' class='Texto' required>
+</br><input type='submit' name='busca'  value='Buscar'> 
+</form>
+
+
+
+<?php
+
+
+    foreach($lista->canciones as $cancion){
+        echo "<ul>";
+            echo "</br>Titulo: ".$cancion->titulo."<br/>";
+            echo "</br>Autor: ".$cancion->autor."<br/>";
+            echo "</br>Duracion: ".$cancion->duracion."<br/>";
+        echo "</ul>";
+
+    }
+
+?>
+
+</body>
+
+</html>
